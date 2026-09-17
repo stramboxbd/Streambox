@@ -1,1427 +1,1342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="description" content="StreamBox — Your Entertainment Hub">
-<title>StreamBox — Entertainment Hub</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-:root{
-  --bg:#070b12;
-  --panel:#0c121b;
-  --line:#1b2736;
-  --text:#f7f8fb;
-  --muted:#9ba8b9;
-  --purple:#7c3cff;
-  --blue:#168cff;
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Inter,Arial,sans-serif;
-  background:var(--bg);
-  color:var(--text);
-  overflow-x:hidden;
-}
-
-a{
-  text-decoration:none;
-  color:inherit;
-}
-
-/* ================= NAVBAR ================= */
-
-.nav{
-  height:64px;
-  position:sticky;
-  top:0;
-  z-index:20;
-  display:flex;
-  align-items:center;
-  gap:28px;
-  padding:0 30px;
-  background:rgba(5,9,15,.94);
-  border-bottom:1px solid #182333;
-  backdrop-filter:blur(18px);
-}
-
-.logo{
-  font-size:25px;
-  font-weight:800;
-  letter-spacing:-1px;
-  white-space:nowrap;
-}
-
-.logo span{
-  color:#9a57ff;
-}
-
-.navlinks{
-  display:flex;
-  gap:28px;
-}
-
-.navlinks a{
-  font-size:14px;
-  color:#c7d0dc;
-  padding:23px 0 20px;
-  position:relative;
-}
-
-.navlinks a.active{
-  color:#fff;
-}
-
-.navlinks a.active:after{
-  content:"";
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
-  height:2px;
-  background:#9a57ff;
-}
-
-.search{
-  margin-left:auto;
-  width:305px;
-  height:38px;
-  display:flex;
-  align-items:center;
-  gap:9px;
-  padding:0 13px;
-  border:1px solid #263446;
-  border-radius:11px;
-  background:#0c131e;
-}
-
-.search input{
-  width:100%;
-  border:0;
-  outline:0;
-  background:transparent;
-  color:#fff;
-  font-size:13px;
-}
-
-.profile{
-  width:38px;
-  height:38px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#21435f;
-  color:#dce9f7;
-}
-
-/* ================= HERO ================= */
-
-.hero{
-  min-height:405px;
-  display:flex;
-  align-items:center;
-  position:relative;
-  overflow:hidden;
-
-  background:
-    linear-gradient(
-      90deg,
-      #071019 0%,
-      rgba(7,16,25,.97) 32%,
-      rgba(7,16,25,.72) 55%,
-      rgba(7,16,25,.12)
-    ),
-    linear-gradient(
-      180deg,
-      transparent 65%,
-      #070b12
-    ),
-    url("https://image.tmdb.org/t/p/original/h8gHn0OzBoaefsYseUByqsmEDMY.jpg")
-    center/cover;
-}
-
-.hero-content{
-  position:relative;
-  z-index:2;
-  padding:55px 0 50px 45px;
-}
-
-.hero h1{
-  font-size:55px;
-  line-height:1.01;
-  letter-spacing:-2.8px;
-  margin-bottom:14px;
-}
-
-.hero h1 span{
-  display:block;
-  color:#823fff;
-}
-
-.hero p{
-  color:#d2d9e3;
-  font-size:16px;
-  line-height:1.6;
-  margin-bottom:23px;
-}
-
-.actions{
-  display:flex;
-  gap:15px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  min-width:208px;
-  height:64px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  gap:13px;
-  padding:0 22px;
-  transition:.2s;
-}
-
-.btn:hover{
-  transform:translateY(-2px);
-}
-
-.primary{
-  background:linear-gradient(135deg,#7432ff,#8f49ff);
-}
-
-.secondary{
-  background:rgba(6,12,20,.55);
-  border:1px solid #a064ff;
-}
-
-.btn-icon{
-  font-size:24px;
-}
-
-.btn strong{
-  font-size:15px;
-  display:block;
-}
-
-.btn small{
-  font-size:12px;
-  color:#c9c5d9;
-}
-
-.features{
-  display:flex;
-  gap:30px;
-  margin-top:25px;
-  flex-wrap:wrap;
-}
-
-.feature{
-  font-size:12px;
-  color:#d3dae4;
-}
-
-.feature b{
-  font-size:19px;
-  color:#a365ff;
-  margin-right:7px;
-}
-
-/* ================= TRENDING ================= */
-
-.section{
-  padding:24px 18px 4px;
-  max-width:1250px;
-  margin:auto;
-}
-
-.head{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  margin-bottom:18px;
-}
-
-.title{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.fire{
-  font-size:27px;
-}
-
-.head h2{
-  font-size:25px;
-}
-
-.sub{
-  color:var(--muted);
-  font-size:13px;
-  margin-top:4px;
-}
-
-.view{
-  color:#a45cff;
-  font-size:13px;
-  font-weight:600;
-}
-
-/* ================= MOVIE CARDS ================= */
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(6,1fr);
-  gap:12px;
-}
-
-.card{
-  min-width:0;
-  cursor:pointer;
-}
-
-.poster{
-  position:relative;
-  aspect-ratio:2/3;
-  overflow:hidden;
-  border:1px solid #1c2a3b;
-  border-radius:8px;
-  background:#101722;
-}
-
-.poster img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-  transition:.35s;
-}
-
-.card:hover img{
-  transform:scale(1.045);
-}
-
-.poster:after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(
-    180deg,
-    transparent 50%,
-    rgba(0,0,0,.32)
-  );
-  pointer-events:none;
-}
-
-.play{
-  position:absolute;
-  z-index:2;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%) scale(.8);
-  width:48px;
-  height:48px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#7c3cff;
-  opacity:0;
-  transition:.25s;
-}
-
-.card:hover .play{
-  opacity:1;
-  transform:translate(-50%,-50%) scale(1);
-}
-
-.card h3{
-  font-size:14px;
-  line-height:1.3;
-  margin-top:9px;
-  min-height:37px;
-}
-
-.meta{
-  display:flex;
-  align-items:center;
-  gap:7px;
-  margin-top:6px;
-  color:#9cabbc;
-  font-size:10px;
-}
-
-.tag{
-  padding:4px 8px;
-  border-radius:8px;
-  background:#132438;
-  color:#bcd0e8;
-}
-
-.series{
-  background:#083d32;
-  color:#58dfbc;
-}
-
-.rating{
-  color:#ffd22e;
-  font-weight:700;
-}
-
-/* ================= PROMO SECTIONS ================= */
-
-.promos{
-  max-width:1250px;
-  margin:20px auto 0;
-  padding:0 18px;
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:12px;
-}
-
-.promo{
-  min-height:230px;
-  position:relative;
-  overflow:hidden;
-  border:1px solid #1d2b3b;
-  border-radius:15px;
-  padding:25px;
-  background:#0c121b;
-}
-
-.app{
-  background:
-    radial-gradient(
-      circle at 18% 55%,
-      rgba(128,55,255,.15),
-      transparent 38%
-    ),
-    #0c111b;
-}
-
-.telegram{
-  background:
-    radial-gradient(
-      circle at 70% 35%,
-      rgba(0,139,255,.13),
-      transparent 40%
-    ),
-    #08131d;
-}
-
-.eyebrow{
-  display:inline-block;
-  padding:6px 11px;
-  border-radius:15px;
-  background:#19213d;
-  color:#c9c3ff;
-  font-size:9px;
-  font-weight:700;
-}
-
-.telegram .eyebrow{
-  background:#0c334c;
-  color:#79cfff;
-}
-
-.promo h3{
-  font-size:24px;
-  line-height:1.12;
-  margin:10px 0 8px;
-}
-
-.promo p{
-  color:#9ba8b9;
-  font-size:12px;
-  line-height:1.55;
-  max-width:430px;
-}
-
-.promo-btn{
-  display:inline-block;
-  margin-top:15px;
-  padding:13px 18px;
-  border-radius:10px;
-  color:#fff;
-  background:linear-gradient(135deg,#7432ff,#8c49ff);
-  font-size:12px;
-  font-weight:700;
-}
-
-.telegram .promo-btn{
-  background:#078af0;
-}
-
-.phone{
-  position:absolute;
-  right:25px;
-  bottom:-25px;
-  width:170px;
-  height:210px;
-  border:8px solid #111b27;
-  border-radius:24px;
-  transform:rotate(6deg);
-
-  background:
-    url("https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg")
-    center/cover;
-
-  box-shadow:0 20px 50px #0008;
-}
-
-.phone:before{
-  content:"StreamBox";
-  position:absolute;
-  top:8px;
-  left:10px;
-  right:10px;
-  text-align:center;
-  font-size:8px;
-  font-weight:800;
-  background:#0009;
-  padding:5px;
-  border-radius:6px;
-}
-
-.tgicon{
-  position:absolute;
-  right:48px;
-  top:55px;
-  width:105px;
-  height:105px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:#169fe7;
-  font-size:48px;
-}
-
-/* ================= WHY STREAMBOX ================= */
-
-.why{
-  max-width:1250px;
-  margin:22px auto 0;
-  padding:0 18px;
-}
-
-.why h2{
-  font-size:22px;
-}
-
-.why p{
-  font-size:12px;
-  color:#9ba8b9;
-  margin-top:4px;
-}
-
-.whygrid{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:12px;
-  margin-top:15px;
-}
-
-.whycard{
-  border:1px solid #1b2939;
-  border-radius:12px;
-  background:#0b121c;
-  padding:17px;
-  min-height:112px;
-}
-
-.icon{
-  width:32px;
-  height:32px;
-  display:grid;
-  place-items:center;
-  border-radius:8px;
-  background:linear-gradient(135deg,#6f30ef,#8c49ff);
-  margin-bottom:9px;
-}
-
-.whycard h3{
-  font-size:13px;
-  margin-bottom:5px;
-}
-
-.whycard p{
-  font-size:11px;
-  line-height:1.45;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-  margin-top:28px;
-  padding:27px 30px 20px;
-  border-top:1px solid #1a2634;
-  background:#060a10;
-}
-
-.footgrid{
-  max-width:1250px;
-  margin:auto;
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr 1.35fr;
-  gap:30px;
-}
-
-.flogo{
-  font-size:21px;
-  font-weight:800;
-}
-
-.flogo span{
-  color:#9b51ff;
-}
-
-footer p,
-footer li,
-footer a{
-  color:#8795a6;
-  font-size:11px;
-  line-height:1.8;
-}
-
-footer h4{
-  font-size:12px;
-  margin-bottom:8px;
-}
-
-footer ul{
-  list-style:none;
-}
-
-.socials{
-  display:flex;
-  gap:13px;
-  margin-top:12px;
-}
-
-.socials a{
-  font-size:16px;
-}
-
-.subscribe{
-  display:flex;
-  gap:7px;
-  margin-top:8px;
-}
-
-.subscribe input{
-  width:100%;
-  height:36px;
-  padding:0 11px;
-  border:1px solid #263346;
-  border-radius:9px;
-  outline:0;
-  background:#0b121c;
-  color:#fff;
-  font-size:11px;
-}
-
-.subscribe button{
-  border:0;
-  border-radius:9px;
-  padding:0 14px;
-  background:#7132ee;
-  color:#fff;
-  font-size:11px;
-  font-weight:700;
-}
-
-.copy{
-  max-width:1250px;
-  margin:25px auto 0;
-  text-align:right;
-  color:#657283;
-  font-size:10px;
-}
-
-.credits{
-  max-width:1250px;
-  margin:7px auto 0;
-  text-align:right;
-  color:#465262;
-  font-size:9px;
-}
-
-/* ================= TABLET ================= */
-
-@media(max-width:1000px){
-
-  .nav{
-    gap:15px;
-    padding:0 16px;
-  }
-
-  .navlinks{
-    display:none;
-  }
-
-  .search{
-    width:230px;
-  }
-
-  .grid{
-    grid-template-columns:repeat(3,1fr);
-  }
-
-  .whygrid{
-    grid-template-columns:repeat(2,1fr);
-  }
-
-  .promos{
-    grid-template-columns:1fr;
-  }
-
-  .footgrid{
-    grid-template-columns:repeat(2,1fr);
-  }
-}
-
-/* ================= MOBILE ================= */
-
-@media(max-width:620px){
-
-  .nav{
-    height:58px;
-  }
-
-  .logo{
-    font-size:21px;
-  }
-
-  .search{
-    width:150px;
-    height:34px;
-  }
-
-  .profile{
-    width:34px;
-    height:34px;
-  }
-
-  .hero{
-    min-height:520px;
-    background-position:65% center;
-  }
-
-  .hero-content{
-    padding:48px 22px;
-  }
-
-  .hero h1{
-    font-size:43px;
-  }
-
-  .hero p{
-    font-size:14px;
-  }
-
-  .btn{
-    min-width:100%;
-    height:58px;
-  }
-
-  .features{
-    gap:14px;
-  }
-
-  .section{
-    padding-left:14px;
-    padding-right:14px;
-  }
-
-  .grid{
-    grid-template-columns:repeat(2,1fr);
-    gap:13px;
-  }
-
-  .promos{
-    padding:0 14px;
-  }
-
-  .promo{
-    min-height:260px;
-    padding:20px;
-  }
-
-  .phone{
-    opacity:.45;
-    right:-10px;
-  }
-
-  .tgicon{
-    right:25px;
-  }
-
-  .why{
-    padding:0 14px;
-  }
-
-  .whygrid{
-    grid-template-columns:1fr;
-  }
-
-  .footgrid{
-    grid-template-columns:1fr 1fr;
-  }
-
-  footer{
-    padding:24px 16px;
-  }
-
-  .copy,
-  .credits{
-    text-align:left;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0912">
+  <meta name="description" content="StreamBox - Movies, Series, TV Shows and entertainment.">
+  <title>StreamBox - Watch Movies & Series</title>
+
+  <style>
+    :root{
+      --bg:#08070d;
+      --bg2:#0d0b14;
+      --card:#12101a;
+      --text:#f5f3f8;
+      --muted:#9c96aa;
+      --purple:#9b4dff;
+      --purple2:#6f32d7;
+      --line:rgba(255,255,255,.08);
+      --shadow:0 20px 60px rgba(0,0,0,.35);
+    }
+
+    *{
+      box-sizing:border-box;
+      margin:0;
+      padding:0;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at 80% 10%,rgba(130,50,255,.13),transparent 28%),
+        radial-gradient(circle at 10% 40%,rgba(93,39,170,.08),transparent 28%),
+        var(--bg);
+      color:var(--text);
+      min-height:100vh;
+    }
+
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+
+    img{
+      display:block;
+      width:100%;
+    }
+
+    .container{
+      width:min(1250px,calc(100% - 32px));
+      margin:auto;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      background:rgba(8,7,13,.86);
+      backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--line);
+    }
+
+    .nav-inner{
+      min-height:72px;
+      display:flex;
+      align-items:center;
+      gap:24px;
+    }
+
+    .logo{
+      font-size:25px;
+      font-weight:900;
+      letter-spacing:-1px;
+      white-space:nowrap;
+    }
+
+    .logo span{
+      color:var(--purple);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      margin-left:8px;
+      flex:1;
+    }
+
+    .nav-links a{
+      color:#c9c4d2;
+      font-size:14px;
+      font-weight:600;
+      transition:.2s;
+    }
+
+    .nav-links a:hover{
+      color:#fff;
+    }
+
+    .nav-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    .search-box{
+      width:220px;
+      height:40px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:0 13px;
+      border:1px solid var(--line);
+      border-radius:10px;
+      background:#100e17;
+    }
+
+    .search-box input{
+      width:100%;
+      border:0;
+      outline:0;
+      background:transparent;
+      color:#fff;
+      font-size:13px;
+    }
+
+    .search-box input::placeholder{
+      color:#777181;
+    }
+
+    .profile{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,var(--purple),#4e1ca8);
+      font-weight:800;
+      box-shadow:0 8px 25px rgba(126,55,220,.3);
+    }
+
+    /* ================= HERO ================= */
+
+    .hero{
+      min-height:560px;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+
+      background:
+        linear-gradient(
+          90deg,
+          #08070d 0%,
+          rgba(8,7,13,.88) 38%,
+          rgba(8,7,13,.25) 70%,
+          rgba(8,7,13,.72) 100%
+        ),
+        linear-gradient(0deg,#08070d 0%,transparent 28%),
+        url("https://image.tmdb.org/t/p/original/h8gHn0OzBoaefsYseUByqsmEDMY.jpg")
+        center/cover no-repeat;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,transparent 65%,var(--bg) 100%);
+      pointer-events:none;
+    }
+
+    .hero-content{
+      position:relative;
+      z-index:2;
+      max-width:660px;
+      padding:80px 0 90px;
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      border:1px solid rgba(155,77,255,.35);
+      border-radius:999px;
+      background:rgba(91,38,154,.16);
+      color:#c995ff;
+      font-size:12px;
+      font-weight:700;
+      margin-bottom:18px;
+    }
+
+    .hero h1{
+      font-size:clamp(42px,6vw,76px);
+      line-height:.98;
+      letter-spacing:-3px;
+      margin-bottom:20px;
+    }
+
+    .hero h1 span{
+      color:var(--purple);
+    }
+
+    .hero p{
+      max-width:600px;
+      color:#b5afc0;
+      line-height:1.75;
+      font-size:16px;
+      margin-bottom:28px;
+    }
+
+    .hero-buttons{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+
+    .btn{
+      border:0;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:9px;
+      min-height:46px;
+      padding:0 19px;
+      border-radius:10px;
+      font-weight:800;
+      font-size:14px;
+      transition:.2s;
+    }
+
+    .btn-primary{
+      color:#fff;
+      background:linear-gradient(135deg,var(--purple),var(--purple2));
+      box-shadow:0 12px 35px rgba(124,48,225,.25);
+    }
+
+    .btn-primary:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn-secondary{
+      color:#eee;
+      background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+    }
+
+    .btn-secondary:hover{
+      background:rgba(255,255,255,.12);
+    }
+
+    /* ================= SECTION ================= */
+
+    section{
+      padding:52px 0;
+    }
+
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:end;
+      gap:20px;
+      margin-bottom:22px;
+    }
+
+    .section-head h2{
+      font-size:28px;
+      letter-spacing:-1px;
+    }
+
+    .section-head p{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:6px;
+    }
+
+    .section-link{
+      color:#b875ff;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    /* ================= MOVIE GRID ================= */
+
+    .movie-grid{
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:16px;
+    }
+
+    .movie-card{
+      position:relative;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:var(--card);
+      box-shadow:var(--shadow);
+      cursor:pointer;
+      transition:transform .25s,border-color .25s;
+    }
+
+    .movie-card:hover{
+      transform:translateY(-6px);
+      border-color:rgba(155,77,255,.5);
+    }
+
+    .poster{
+      aspect-ratio:2/3;
+      object-fit:cover;
+      background:linear-gradient(135deg,#21163a,#0d0b13);
+    }
+
+    .movie-info{
+      padding:12px;
+    }
+
+    .movie-title{
+      font-size:13px;
+      font-weight:800;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .movie-meta{
+      display:flex;
+      justify-content:space-between;
+      gap:8px;
+      color:#7f788d;
+      font-size:11px;
+      margin-top:7px;
+    }
+
+    .badge{
+      position:absolute;
+      top:9px;
+      left:9px;
+      padding:5px 7px;
+      border-radius:6px;
+      background:rgba(10,8,15,.82);
+      border:1px solid rgba(255,255,255,.1);
+      color:#ddd;
+      font-size:10px;
+      font-weight:800;
+      backdrop-filter:blur(6px);
+    }
+
+    /* ================= APP PROMO ================= */
+
+    .promo{
+      display:grid;
+      grid-template-columns:1.15fr .85fr;
+      gap:25px;
+      align-items:center;
+      padding:28px;
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:
+        radial-gradient(circle at 80% 20%,rgba(155,77,255,.2),transparent 35%),
+        linear-gradient(135deg,#151020,#0f0c16);
+      overflow:hidden;
+    }
+
+    .promo h2{
+      font-size:32px;
+      letter-spacing:-1.5px;
+      margin-bottom:12px;
+    }
+
+    .promo p{
+      color:#aaa4b4;
+      line-height:1.7;
+      max-width:560px;
+      margin-bottom:20px;
+    }
+
+    .promo-image{
+      max-height:310px;
+      object-fit:contain;
+      filter:drop-shadow(0 25px 45px rgba(0,0,0,.55));
+    }
+
+    /* ================= TELEGRAM ================= */
+
+    .telegram{
+      padding:34px;
+      border-radius:20px;
+      background:linear-gradient(135deg,#15101f,#0e0b15);
+      border:1px solid rgba(155,77,255,.2);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:25px;
+    }
+
+    .telegram h2{
+      font-size:25px;
+      margin-bottom:8px;
+    }
+
+    .telegram p{
+      color:var(--muted);
+      line-height:1.6;
+      max-width:650px;
+    }
+
+    /* ================= WHY ================= */
+
+    .why-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+    }
+
+    .why-card{
+      padding:22px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:15px;
+    }
+
+    .why-icon{
+      width:44px;
+      height:44px;
+      display:grid;
+      place-items:center;
+      border-radius:12px;
+      background:rgba(155,77,255,.12);
+      color:#bb7cff;
+      font-size:21px;
+      margin-bottom:15px;
+    }
+
+    .why-card h3{
+      font-size:16px;
+      margin-bottom:8px;
+    }
+
+    .why-card p{
+      color:#8e879b;
+      font-size:13px;
+      line-height:1.7;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer{
+      margin-top:30px;
+      border-top:1px solid var(--line);
+      background:#07060b;
+      padding:35px 0 20px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:1.4fr 1fr 1fr;
+      gap:30px;
+    }
+
+    .footer-brand p{
+      color:#817b8c;
+      max-width:430px;
+      line-height:1.7;
+      font-size:13px;
+      margin-top:12px;
+    }
+
+    .footer-col h4{
+      font-size:13px;
+      margin-bottom:13px;
+    }
+
+    .footer-col a{
+      display:block;
+      color:#817b8c;
+      font-size:13px;
+      margin:9px 0;
+    }
+
+    .footer-col a:hover{
+      color:#b875ff;
+    }
+
+    .developer-credit{
+      max-width:1250px;
+      margin:25px auto 0;
+      padding-top:18px;
+      border-top:1px solid var(--line);
+      text-align:right;
+      color:#716b7b;
+      font-size:11px;
+    }
+
+    .developer-credit strong{
+      color:#a65dff;
+      font-weight:800;
+    }
+
+    .copyright{
+      margin-top:12px;
+      color:#57515f;
+      font-size:11px;
+      line-height:1.6;
+    }
+
+    /* ================= SEARCH ================= */
+
+    .no-results{
+      display:none;
+      padding:35px 10px;
+      color:#8f8899;
+      text-align:center;
+      grid-column:1/-1;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media(max-width:1050px){
+
+      .nav-links{
+        gap:13px;
+      }
+
+      .nav-links a:nth-child(n+5){
+        display:none;
+      }
+
+      .movie-grid{
+        grid-template-columns:repeat(3,1fr);
+      }
+    }
+
+    @media(max-width:760px){
+
+      .nav-inner{
+        min-height:62px;
+        gap:10px;
+      }
+
+      .nav-links{
+        display:none;
+      }
+
+      .nav-actions{
+        margin-left:auto;
+      }
+
+      .search-box{
+        width:150px;
+      }
+
+      .hero{
+        min-height:520px;
+      }
+
+      .hero-content{
+        padding:70px 0;
+      }
+
+      .hero h1{
+        letter-spacing:-2px;
+      }
+
+      .promo{
+        grid-template-columns:1fr;
+        text-align:center;
+      }
+
+      .promo p{
+        margin-left:auto;
+        margin-right:auto;
+      }
+
+      .promo-image{
+        max-height:230px;
+      }
+
+      .telegram{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .why-grid{
+        grid-template-columns:1fr;
+      }
+
+      .footer-grid{
+        grid-template-columns:1fr 1fr;
+      }
+    }
+
+    @media(max-width:520px){
+
+      .container{
+        width:min(100% - 22px,1250px);
+      }
+
+      .logo{
+        font-size:21px;
+      }
+
+      .search-box{
+        width:118px;
+      }
+
+      .profile{
+        width:36px;
+        height:36px;
+      }
+
+      .hero{
+        min-height:500px;
+      }
+
+      .hero h1{
+        font-size:45px;
+      }
+
+      .hero p{
+        font-size:14px;
+      }
+
+      .movie-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:11px;
+      }
+
+      .movie-info{
+        padding:10px;
+      }
+
+      .movie-title{
+        font-size:12px;
+      }
+
+      .section-head h2{
+        font-size:23px;
+      }
+
+      .promo{
+        padding:22px;
+      }
+
+      .promo h2{
+        font-size:25px;
+      }
+
+      .telegram{
+        padding:23px;
+      }
+
+      .footer-grid{
+        grid-template-columns:1fr;
+      }
+
+      .developer-credit{
+        text-align:center;
+        font-size:10px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<!-- ================= NAVBAR ================= -->
+  <!-- ================= NAVBAR ================= -->
 
-<nav class="nav">
+  <header class="navbar">
+    <div class="container nav-inner">
 
-  <a class="logo" href="#home">
-    Stream<span>Box</span>
-  </a>
-
-  <div class="navlinks">
-    <a class="active" href="#home">Home</a>
-    <a href="#trending">Movies</a>
-    <a href="#trending">Series</a>
-    <a href="#trending">TV Shows</a>
-    <a href="#why">Categories</a>
-  </div>
-
-  <label class="search">
-    ⌕
-    <input
-      id="search"
-      type="search"
-      placeholder="Search movies, series..."
-    >
-  </label>
-
-  <div class="profile">●</div>
-
-</nav>
-
-
-<!-- ================= HERO ================= -->
-
-<header class="hero" id="home">
-
-  <div class="hero-content">
-
-    <h1>
-      Everything<br>
-      You Love
-      <span>to Watch</span>
-    </h1>
-
-    <p>
-      Movies. Series. Reality Shows. All in one place.<br>
-      StreamBox — Your Entertainment Hub.
-    </p>
-
-    <div class="actions">
-
-      <!-- APP DOWNLOAD BUTTON -->
-      <a
-        class="btn primary"
-        href="https://pubnotepad.com/ot0Jdx"
-        target="_blank"
-        rel="noopener"
-      >
-        <span class="btn-icon">⇩</span>
-
-        <span>
-          <strong>Download App</strong>
-          <small>Get StreamBox App</small>
-        </span>
-      </a>
-
-
-      <!-- TELEGRAM BUTTON -->
-      <a
-        class="btn secondary"
-        href="https://t.me/Streamboxxbd"
-        target="_blank"
-        rel="noopener"
-      >
-        <span class="btn-icon">➤</span>
-
-        <span>
-          <strong>Join Telegram</strong>
-          <small>Latest Updates</small>
-        </span>
-      </a>
-
-    </div>
-
-
-    <div class="features">
-
-      <div class="feature">
-        <b>ϟ</b>
-        Fast Streaming
-      </div>
-
-      <div class="feature">
-        <b>⬡</b>
-        Safe &amp; Secure
-      </div>
-
-      <div class="feature">
-        <b>▣</b>
-        All Devices
-      </div>
-
-    </div>
-
-  </div>
-
-</header>
-
-
-<!-- ================= TRENDING ================= -->
-
-<section class="section" id="trending">
-
-  <div class="head">
-
-    <div class="title">
-
-      <span class="fire">🔥</span>
-
-      <div>
-        <h2>Trending Now</h2>
-
-        <div class="sub">
-          Most popular movies &amp; series right now
-        </div>
-      </div>
-
-    </div>
-
-    <a class="view" href="#trending">
-      View All →
-    </a>
-
-  </div>
-
-
-  <div class="grid" id="grid">
-
-
-    <!-- THE SHAWSHANK REDEMPTION -->
-
-    <article
-      class="card"
-      data-title="The Shawshank Redemption"
-    >
-
-      <div class="poster">
-
-        <img
-          src="https://image.tmdb.org/t/p/w500/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg"
-          alt="The Shawshank Redemption poster"
-          loading="lazy"
-        >
-
-        <div class="play">
-          ▶
-        </div>
-
-      </div>
-
-      <h3>
-        The Shawshank Redemption
-      </h3>
-
-      <div class="meta">
-
-        <span class="tag">
-          Movie
-        </span>
-
-        <span>
-          1994
-        </span>
-
-        <span class="rating">
-          ★ 9.3
-        </span>
-
-      </div>
-
-    </article>
-
-
-    <!-- SCHINDLER'S LIST -->
-
-    <article
-      class="card"
-      data-title="Schindler's List"
-    >
-
-      <div class="poster">
-
-        <img
-          src="https://image.tmdb.org/t/p/w500/I2LJ7ens7Rzlm3x5HfDbwF3ykh.jpg"
-          alt="Schindler's List poster"
-          loading="lazy"
-        >
-
-        <div class="play">
-          ▶
-        </div>
-
-      </div>
-
-      <h3>
-        Schindler's List
-      </h3>
-
-      <div class="meta">
-
-        <span class="tag">
-          Movie
-        </span>
-
-        <span>
-          1993
-        </span>
-
-        <span class="rating">
-          ★ 9.0
-        </span>
-
-      </div>
-
-    </article>
-
-
-    <!-- THE GODFATHER -->
-
-    <article
-      class="card"
-      data-title="The Godfather"
-    >
-
-      <div class="poster">
-
-        <img
-          src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
-          alt="The Godfather poster"
-          loading="lazy"
-        >
-
-        <div class="play">
-          ▶
-        </div>
-
-      </div>
-
-      <h3>
-        The Godfather
-      </h3>
-
-      <div class="meta">
-
-        <span class="tag">
-          Movie
-        </span>
-
-        <span>
-          1972
-        </span>
-
-        <span class="rating">
-          ★ 9.2
-        </span>
-
-      </div>
-
-    </article>
-
-
-    <!-- BREAKING BAD -->
-
-    <article
-      class="card"
-      data-title="Breaking Bad"
-    >
-
-      <div class="poster">
-
-        <img
-          src="https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"
-          alt="Breaking Bad poster"
-          loading="lazy"
-        >
-
-        <div class="play">
-          ▶
-        </div>
-
-      </div>
-
-      <h3>
-        Breaking Bad
-      </h3>
-
-      <div class="meta">
-
-        <span class="tag series">
-          Series
-        </span>
-
-        <span>
-          2008
-        </span>
-
-        <span class="rating">
-          ★ 9.5
-        </span>
-
-      </div>
-
-    </article>
-
-
-    <!-- GAME OF THRONES -->
-
-    <article
-      class="card"
-      data-title="Game of Thrones"
-    >
-
-      <div class="poster">
-
-        <img
-          src="https://image.tmdb.org/t/p/w500/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg"
-          alt="Game of Thrones poster"
-          loading="lazy"
-        >
-
-        <div class="play">
-          ▶
-        </div>
-
-      </div>
-
-      <h3>
-        Game of Thrones
-      </h3>
-
-      <div class="meta">
-
-        <span class="tag series">
-          Series
-        </span>
-
-        <span>
-          2011
-        </span>
-
-        <span class="rating">
-          ★ 9.2
-        </span>
-
-      </div>
-
-    </article>
-
-
-    <!-- BIGG BOSS S20 -->
-
-    <article
-      class="card"
-      data-title="Bigg Boss S20"
-    >
-
-      <div class="poster">
-
-        <img
-          src="https://commons.wikimedia.org/wiki/Special:FilePath/Bigg%20Boss%2020.jpg"
-          alt="Bigg Boss 20 poster"
-          loading="lazy"
-        >
-
-        <div class="play">
-          ▶
-        </div>
-
-      </div>
-
-      <h3>
-        Bigg Boss S20
-      </h3>
-
-      <div class="meta">
-
-        <span class="tag series">
-          Series
-        </span>
-
-        <span>
-          2026
-        </span>
-
-        <span class="rating">
-          ★ 8.1
-        </span>
-
-      </div>
-
-    </article>
-
-  </div>
-
-</section>
-
-
-<!-- ================= PROMO ================= -->
-
-<section class="promos">
-
-
-  <!-- APP PROMO -->
-
-  <div class="promo app">
-
-    <span class="eyebrow">
-      STREAMBOX APP
-    </span>
-
-    <h3>
-      Take Entertainment<br>
-      Everywhere
-    </h3>
-
-    <p>
-      Download the StreamBox app and enjoy
-      your favorite movies &amp; series on the go.
-    </p>
-
-    <a
-      class="promo-btn"
-      href="https://pubnotepad.com/ot0Jdx"
-      target="_blank"
-      rel="noopener"
-    >
-      ⇩ &nbsp;
-      Download StreamBox App
-      &nbsp; ↗
-    </a>
-
-    <div class="phone"></div>
-
-  </div>
-
-
-  <!-- TELEGRAM PROMO -->
-
-  <div class="promo telegram">
-
-    <span class="eyebrow">
-      JOIN OUR COMMUNITY
-    </span>
-
-    <h3>
-      Join Our<br>
-      Telegram Channel
-    </h3>
-
-    <p>
-      Get the latest updates, new releases,
-      announcements and more.
-    </p>
-
-    <a
-      class="promo-btn"
-      href="https://t.me/Streamboxxbd"
-      target="_blank"
-      rel="noopener"
-    >
-      ➤ &nbsp;
-      Join Telegram Channel
-      &nbsp; ↗
-    </a>
-
-    <div class="tgicon">
-      ➤
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= WHY STREAMBOX ================= -->
-
-<section class="why" id="why">
-
-  <h2>
-    Why Choose StreamBox?
-  </h2>
-
-  <p>
-    A better way to watch what you love.
-  </p>
-
-
-  <div class="whygrid">
-
-
-    <div class="whycard">
-
-      <div class="icon">
-        ▶
-      </div>
-
-      <h3>
-        Huge Library
-      </h3>
-
-      <p>
-        Movies, series, reality shows and more.
-      </p>
-
-    </div>
-
-
-    <div class="whycard">
-
-      <div class="icon">
-        ϟ
-      </div>
-
-      <h3>
-        Regular Updates
-      </h3>
-
-      <p>
-        Always get the latest content first.
-      </p>
-
-    </div>
-
-
-    <div class="whycard">
-
-      <div class="icon">
-        HD
-      </div>
-
-      <h3>
-        HD Streaming
-      </h3>
-
-      <p>
-        Smooth and high-quality playback.
-      </p>
-
-    </div>
-
-
-    <div class="whycard">
-
-      <div class="icon">
-        ▣
-      </div>
-
-      <h3>
-        Multi-Device
-      </h3>
-
-      <p>
-        Watch on your phone, tablet or desktop.
-      </p>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- ================= FOOTER ================= -->
-
-<footer>
-
-  <div class="footgrid">
-
-
-    <div>
-
-      <div class="flogo">
+      <a class="logo" href="#home">
         Stream<span>Box</span>
-      </div>
+      </a>
 
-      <p>
-        Stream More. Worry Less.
-      </p>
+      <nav class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#trending">Movies</a>
+        <a href="#trending">Series</a>
+        <a href="#trending">TV Shows</a>
+        <a href="#why">Categories</a>
+      </nav>
 
-      <div class="socials">
+      <div class="nav-actions">
 
-        <a href="#">
-          ▶
-        </a>
+        <label class="search-box">
+          <span>⌕</span>
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Search..."
+            autocomplete="off"
+          >
+        </label>
 
-        <a
-          href="https://t.me/Streamboxxbd"
-          target="_blank"
-          rel="noopener"
-        >
-          ➤
-        </a>
-
-        <a href="#">
-          f
-        </a>
-
-        <a href="#">
-          𝕏
-        </a>
+        <div class="profile">S</div>
 
       </div>
-
     </div>
+  </header>
 
 
-    <div>
+  <!-- ================= HERO ================= -->
 
-      <h4>
-        Quick Links
-      </h4>
+  <main id="home">
 
-      <ul>
+    <section class="hero">
 
-        <li>
+      <div class="container hero-content">
+
+        <div class="eyebrow">
+          ✦ PREMIUM STREAMING EXPERIENCE
+        </div>
+
+        <h1>
+          Watch Your<br>
+          <span>Favorite</span> Content.
+        </h1>
+
+        <p>
+          StreamBox brings movies, series and TV entertainment together
+          in one modern streaming experience. Discover trending content,
+          download the app and stay connected with our official Telegram channel.
+        </p>
+
+        <div class="hero-buttons">
+
+          <a
+            class="btn btn-primary"
+            href="#trending"
+          >
+            ▶ Explore Trending
+          </a>
+
+          <a
+            class="btn btn-secondary"
+            href="https://pubnotepad.com/ot0Jdx"
+            target="_blank"
+            rel="noopener"
+          >
+            ↓ Download App
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= TRENDING ================= -->
+
+    <section id="trending">
+
+      <div class="container">
+
+        <div class="section-head">
+
+          <div>
+            <h2>Trending Now</h2>
+            <p>
+              Popular movies and shows featured on StreamBox.
+            </p>
+          </div>
+
+          <a class="section-link" href="#trending">
+            View All →
+          </a>
+
+        </div>
+
+
+        <div class="movie-grid" id="movieGrid">
+
+
+          <!-- SHAWshank -->
+
+          <article
+            class="movie-card"
+            data-title="The Shawshank Redemption"
+          >
+
+            <span class="badge">MOVIE</span>
+
+            <img
+              class="poster"
+              src="https://commons.wikimedia.org/wiki/Special:FilePath/ShawshankRedemptionMoviePoster.jpg?width=500"
+              alt="The Shawshank Redemption poster"
+              loading="lazy"
+              onerror="this.src='https://image.tmdb.org/t/p/w500/9O7gLzmreU0nGkIB6K3BsJbzvNv.jpg';"
+            >
+
+            <div class="movie-info">
+
+              <div class="movie-title">
+                The Shawshank Redemption
+              </div>
+
+              <div class="movie-meta">
+                <span>1994</span>
+                <span>⭐ 9.3</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- SCHINDLER'S LIST -->
+
+          <article
+            class="movie-card"
+            data-title="Schindler's List"
+          >
+
+            <span class="badge">MOVIE</span>
+
+            <img
+              class="poster"
+              src="https://upload.wikimedia.org/wikipedia/en/3/38/Schindler%27s_List_movie.jpg"
+              alt="Schindler's List poster"
+              loading="lazy"
+            >
+
+            <div class="movie-info">
+
+              <div class="movie-title">
+                Schindler's List
+              </div>
+
+              <div class="movie-meta">
+                <span>1993</span>
+                <span>⭐ 9.0</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- GODFATHER -->
+
+          <article
+            class="movie-card"
+            data-title="The Godfather"
+          >
+
+            <span class="badge">MOVIE</span>
+
+            <img
+              class="poster"
+              src="https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg"
+              alt="The Godfather poster"
+              loading="lazy"
+            >
+
+            <div class="movie-info">
+
+              <div class="movie-title">
+                The Godfather
+              </div>
+
+              <div class="movie-meta">
+                <span>1972</span>
+                <span>⭐ 9.2</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- BREAKING BAD -->
+
+          <article
+            class="movie-card"
+            data-title="Breaking Bad"
+          >
+
+            <span class="badge">SERIES</span>
+
+            <img
+              class="poster"
+              src="https://image.tmdb.org/t/p/w500/ggFHVNu6YYI5L9pCfOacjizRGt.jpg"
+              alt="Breaking Bad poster"
+              loading="lazy"
+            >
+
+            <div class="movie-info">
+
+              <div class="movie-title">
+                Breaking Bad
+              </div>
+
+              <div class="movie-meta">
+                <span>2008</span>
+                <span>⭐ 9.5</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- GAME OF THRONES -->
+
+          <article
+            class="movie-card"
+            data-title="Game of Thrones"
+          >
+
+            <span class="badge">SERIES</span>
+
+            <img
+              class="poster"
+              src="https://image.tmdb.org/t/p/w500/gwPSoYUHAKmdyVywgLpKKA4BjRr.jpg"
+              alt="Game of Thrones poster"
+              loading="lazy"
+            >
+
+            <div class="movie-info">
+
+              <div class="movie-title">
+                Game of Thrones
+              </div>
+
+              <div class="movie-meta">
+                <span>2011</span>
+                <span>⭐ 9.2</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- BIGG BOSS -->
+
+          <article
+            class="movie-card"
+            data-title="Bigg Boss S20"
+          >
+
+            <span class="badge">TV SHOW</span>
+
+            <img
+              class="poster"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTglX9tbIEGBlCT2-bup0eRYJR8L2OcvMypYcX-jfhBq8fN1JSVd18e_w4&s=10"
+              alt="Bigg Boss 20 poster"
+              loading="lazy"
+            >
+
+            <div class="movie-info">
+
+              <div class="movie-title">
+                Big Boss S20
+              </div>
+
+              <div class="movie-meta">
+                <span>2026</span>
+                <span>TV</span>
+              </div>
+
+            </div>
+
+          </article>
+
+
+          <!-- NO SEARCH RESULTS -->
+
+          <div
+            class="no-results"
+            id="noResults"
+          >
+            No matching movie or series found.
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= APP PROMO ================= -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="promo">
+
+          <div>
+
+            <div class="eyebrow">
+              STREAMBOX APP
+            </div>
+
+            <h2>
+              Take StreamBox<br>
+              Everywhere.
+            </h2>
+
+            <p>
+              Get the StreamBox app and enjoy a cleaner, faster way to
+              discover your favorite entertainment from your phone.
+            </p>
+
+            <a
+              class="btn btn-primary"
+              href="https://pubnotepad.com/ot0Jdx"
+              target="_blank"
+              rel="noopener"
+            >
+              ↓ Download StreamBox App
+            </a>
+
+          </div>
+
+
+          <img
+            class="promo-image"
+            src="https://image.tmdb.org/t/p/w500/vZloFAK7NmvMGKE7VkF5UHaz0I.jpg"
+            alt="StreamBox app promotion"
+            loading="lazy"
+          >
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= TELEGRAM ================= -->
+
+    <section>
+
+      <div class="container">
+
+        <div class="telegram">
+
+          <div>
+
+            <h2>
+              Join Our Telegram Channel
+            </h2>
+
+            <p>
+              Get updates, new releases, announcements and StreamBox news
+              directly through our Telegram channel.
+            </p>
+
+          </div>
+
+
+          <a
+            class="btn btn-primary"
+            href="https://t.me/Streamboxxbd"
+            target="_blank"
+            rel="noopener"
+          >
+            ✈ Join Telegram
+          </a>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ================= WHY STREAMBOX ================= -->
+
+    <section id="why">
+
+      <div class="container">
+
+        <div class="section-head">
+
+          <div>
+
+            <h2>
+              Why Choose StreamBox?
+            </h2>
+
+            <p>
+              A simple, modern and convenient entertainment experience.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="why-grid">
+
+
+          <div class="why-card">
+
+            <div class="why-icon">
+              ⚡
+            </div>
+
+            <h3>
+              Fast Experience
+            </h3>
+
+            <p>
+              Lightweight design and a clean interface make browsing
+              your favorite content quick and easy.
+            </p>
+
+          </div>
+
+
+          <div class="why-card">
+
+            <div class="why-icon">
+              🎬
+            </div>
+
+            <h3>
+              Movies & Series
+            </h3>
+
+            <p>
+              Explore popular movies, TV shows and series from one
+              convenient StreamBox homepage.
+            </p>
+
+          </div>
+
+
+          <div class="why-card">
+
+            <div class="why-icon">
+              📱
+            </div>
+
+            <h3>
+              Mobile Friendly
+            </h3>
+
+            <p>
+              StreamBox is designed to work smoothly across phones,
+              tablets, laptops and desktop screens.
+            </p>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <div class="container">
+
+      <div class="footer-grid">
+
+
+        <div class="footer-brand">
+
+          <a class="logo" href="#home">
+            Stream<span>Box</span>
+          </a>
+
+          <p>
+            A modern entertainment website for discovering movies,
+            series and TV content.
+          </p>
+
+          <div class="copyright">
+            © 2026 StreamBox. All rights reserved.
+          </div>
+
+        </div>
+
+
+        <div class="footer-col">
+
+          <h4>
+            Quick Links
+          </h4>
+
           <a href="#home">
             Home
           </a>
-        </li>
 
-        
+          <a href="#trending">
+            Trending
+          </a>
+
+          <a href="#why">
+            Categories
+          </a>
+
+          <a
+            href="https://pubnotepad.com/ot0Jdx"
+            target="_blank"
+            rel="noopener"
+          >
+            Download App
+          </a>
+
+        </div>
+
+
+        <div class="footer-col">
+
+          <h4>
+            Connect
+          </h4>
+
+          <a
+            href="https://t.me/Streamboxxbd"
+            target="_blank"
+            rel="noopener"
+          >
+            Telegram Channel
+          </a>
+
+          <a href="#trending">
+            Movies
+          </a>
+
+          <a href="#trending">
+            Series
+          </a>
+
+          <a href="#trending">
+            TV Shows
+          </a>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- DEVELOPER CREDIT -->
+
+      <div class="developer-credit">
+        Developed by
+        <strong>
+          Muhammad Rashedul Hasan
+        </strong>
+      </div>
+
+    </div>
+
+  </footer>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const cards =
+      [...document.querySelectorAll(".movie-card")];
+
+    const noResults =
+      document.getElementById("noResults");
+
+
+    /* SEARCH */
+
+    searchInput.addEventListener("input", function(){
+
+      const query =
+        this.value.trim().toLowerCase();
+
+      let visible = 0;
+
+
+      cards.forEach(card => {
+
+        const title =
+          card.dataset.title.toLowerCase();
+
+        const match =
+          title.includes(query);
+
+
+        card.style.display =
+          match ? "" : "none";
+
+
+        if(match){
+          visible++;
+        }
+
+      });
+
+
+      noResults.style.display =
+        visible === 0 ? "block" : "none";
+
+    });
+
+
+    /* MOVIE CARD CLICK */
+
+    cards.forEach(card => {
+
+      card.addEventListener("click", () => {
+
+        const title =
+          card.dataset.title;
+
+
+        alert(
+          title +
+          "\n\nWatch/download link can be connected here later."
+        );
+
+      });
+
+    });
+
+  </script>
+
+</body>
+</html>
